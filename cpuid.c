@@ -29,18 +29,31 @@
 
 int main(int argc, char *argv[])
 {
-	char *cpu = read_cpu();
+	unsigned int *cpu = read_cpu();
 	if(-1 == *cpu)
-		// BUG: Leaking *cpu, however error() results in termination.
+		/* BUG: Leaking *cpu, however error() results in termination. */
 		error("Failed to read CPU.");
+	printf("Processor:\t%d\n", read_field(cpu, PROCESSOR) >> 12);
+	printf("Model Number:\t%d\n", read_field(cpu, MODEL_NUMBER) >> 4);
+	printf("Family Number:\t%d\n", read_field(cpu, FAMILY_NUMBER) >> 8);
+	printf("Stepping:\t%d\n", read_field(cpu, STEPPING_NUMBER));
 	free(cpu);
 	return EXIT_SUCCESS;
 }
 
-char * read_cpu()
+unsigned int * read_cpu()
 {
-	char *c = malloc(sizeof *c);
-	*c = -1;
-	return c;
+	unsigned int *cpuid = calloc(1, sizeof *cpuid); /* calloc for init to 0 */
+	if(NULL == cpuid)
+		error("Failed to reserve memory for results.");
+	__asm__ __volatile__ ("cpuid": "=a" (*cpuid) : "a" (FUNC_GET_DETAIL));
+	return cpuid;
+}
+
+unsigned int read_field(const unsigned int *cpu, int bitmask)
+{
+	unsigned int field = *cpu;
+	field &= bitmask;
+	return field;
 }
 

@@ -3,5 +3,5 @@ clean:
 	-rm cpuid
 
 build:
-	gcc -o cpuid cpuid.c
+	gcc -ansi -pedantic -Wall -o cpuid cpuid.c
 
