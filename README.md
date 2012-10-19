@@ -3,7 +3,6 @@ cpuid
 =====
 
 Query x86 / x64 processor details, across operating systems.
-Craig J Perry, <craigp84@gmail.com>
 
 Background
 ==========
