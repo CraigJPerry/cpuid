@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
 		error("Failed to read CPU.");
 	printf("Processor:\t%d\n", read_field(cpu, PROCESSOR) >> 12);
 	printf("Model Number:\t%d\n", read_field(cpu, MODEL_NUMBER) >> 4);
+	printf("Extended Model:\t%d\n", read_field(cpu, EXT_MODEL) >> 16);
 	printf("Family Number:\t%d\n", read_field(cpu, FAMILY_NUMBER) >> 8);
 	printf("Stepping:\t%d\n", read_field(cpu, STEPPING_NUMBER));
 	free(cpu);

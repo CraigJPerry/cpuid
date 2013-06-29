@@ -7,6 +7,7 @@
 #define MODEL_NUMBER	0x00F0
 #define FAMILY_NUMBER	0x0F00
 #define PROCESSOR	0x3000
+#define EXT_MODEL      0xF0000
 
 
 /* Function Prototypes */
